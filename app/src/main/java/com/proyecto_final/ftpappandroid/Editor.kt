@@ -34,10 +34,14 @@ class Editor : AppCompatActivity() {
                     conexion.leerArchivo(conexion.descargaArchivo())
                 }
 
-                //SOLO MUESTRA LA SEGUNDA LINEA, NO LA PRIMERA. SEGUIR DESDE AQUI
-                while(bufer.readLine()!=null){
-                    binding.etPrincipal.append(bufer.readLine())
+                val linelist= mutableListOf<String>()
+                bufer.useLines {
+                        lines-> lines.forEach {
+                            linelist.add(it+"\n")
+                        }
                 }
+                linelist.forEach { binding.etPrincipal.append(it) }
+
             }
 
             Toast.makeText(this,"Datos obtenidos correctamente", Toast.LENGTH_LONG).show()

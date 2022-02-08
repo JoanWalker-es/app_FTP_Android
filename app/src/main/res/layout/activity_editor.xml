@@ -15,26 +15,55 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_cargar"
+        app:layout_constraintBottom_toTopOf="@id/layout_btn"
         android:inputType="textMultiLine"
         android:background="@drawable/edit_text_border"
+        android:layout_marginTop="50dp"
         >
 
     </EditText>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cargar"
+    <LinearLayout
+        android:id="@+id/layout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="@string/conectar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/et_principal"
-        android:textColor="@color/color_primary"
-        app:strokeColor="@color/color_primary"
-        app:strokeWidth="2dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cargar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/cargar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_principal"
+            android:textColor="@color/color_primary"
+            app:strokeColor="@color/color_primary"
+            app:strokeWidth="2dp"
+            android:layout_marginVertical="50dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_salir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="@string/salir"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_principal"
+            android:textColor="@color/color_primary"
+            app:strokeColor="@color/color_primary"
+            app:strokeWidth="2dp"/>
+
+    </LinearLayout>
+    
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

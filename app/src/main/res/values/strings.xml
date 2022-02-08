@@ -6,4 +6,5 @@
     <string name="password">CONTRASEÑA</string>
     <string name="conectar">CONECTAR</string>
     <string name="cargar">CARGAR</string>
+    <string name="salir">SALIR</string>
 </resources>
