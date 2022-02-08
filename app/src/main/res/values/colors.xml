@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#5c6bc0</color>
+    <color name="color_primary_variant">#8e99f3</color>
+
+    <color name="color_secondary">#9fa8da</color>
+    <color name="color_secondary_variant">#d1d9ff</color>
+
+    <color name="color_on_primary">@color/black</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="mtrl_textinput_default_box_stroke_color">@color/color_primary</color>
+
+</resources>

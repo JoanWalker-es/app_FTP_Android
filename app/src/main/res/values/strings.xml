@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FTP app Android</string>
+    <string name="ip">IP</string>
+    <string name="puerto">PUERTO</string>
+    <string name="usuario">USUARIO</string>
+    <string name="password">CONTRASEÑA</string>
+    <string name="conectar">CONECTAR</string>
+    <string name="cargar">CARGAR</string>
+</resources>
