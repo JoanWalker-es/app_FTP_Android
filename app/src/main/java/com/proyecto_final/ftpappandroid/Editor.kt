@@ -3,7 +3,9 @@ package com.proyecto_final.ftpappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +16,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.*
 import java.net.SocketException
+import java.io.IOException
+
+import java.io.FileWriter
+
+import java.io.BufferedWriter
+
+import java.io.File
+
+
+
 
 class Editor : AppCompatActivity() {
     private lateinit var binding:ActivityEditorBinding
+    private lateinit var conexion:Conexion_ftp
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityEditorBinding.inflate(layoutInflater)
@@ -24,7 +38,7 @@ class Editor : AppCompatActivity() {
         setContentView(view)
 
 
-        val conexion:Conexion_ftp = getIntent().getSerializableExtra("CONECTADO") as Conexion_ftp
+        conexion= getIntent().getSerializableExtra("CONECTADO") as Conexion_ftp
 
         try{
             lifecycleScope.launch {
@@ -40,8 +54,10 @@ class Editor : AppCompatActivity() {
                             linelist.add(it+"\n")
                         }
                 }
-                linelist.forEach { binding.etPrincipal.append(it) }
-
+                linelist.forEach {
+                    binding.etPrincipal.append(it)
+                }
+                bufer.close()
             }
 
             Toast.makeText(this,"Datos obtenidos correctamente", Toast.LENGTH_LONG).show()
@@ -51,6 +67,39 @@ class Editor : AppCompatActivity() {
             Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
         }
 
+        binding.btnCargar.setOnClickListener {
+            if(conexion==null){
+                Toast.makeText(this,"NO HAY CONEXION CON EL DECODIFICADOR",Toast.LENGTH_SHORT).show()
+            }else{
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO){
+                        val archivo = File(conexion.directorioLocal)
+                        try {
+                            val writer = BufferedWriter(FileWriter(archivo, false)) // true for append
+                            writer.write(binding.etPrincipal.text.toString())
+                            writer.close()
+                            conexion.subirFichero()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                }
+                Toast.makeText(this,"Fichero subido correctamente al decodificador",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(conexion!=null){
+            conexion.close()
+        }
     }
 
 }
+
+

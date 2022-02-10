@@ -25,7 +25,7 @@ public class Conexion_ftp implements Serializable {
     private String password = "";
     private FTPClient ftp;
     private String directorioLocal = "";
-    private String ficheroCCcam = "CCcam.cfg";
+    private final String ficheroCCcam = "CCcam.cfg";
     private boolean conectado = false;
 
     public String getDirectorioLocal() {
@@ -76,7 +76,7 @@ public class Conexion_ftp implements Serializable {
      * @throws IOException
      */
 
-    public void conexionFtp() throws SocketException, IOException {
+    public boolean conexionFtp() throws SocketException, IOException {
 
         ftp = new FTPClient();
         ftp.connect(server, port);
@@ -93,8 +93,9 @@ public class Conexion_ftp implements Serializable {
         } else {
             conectado = false;
         }
-
         ftp.setControlEncoding("UTF-8");
+
+        return conectado;
     }
 
     /**
