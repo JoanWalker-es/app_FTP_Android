@@ -10,10 +10,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.proyecto_final.ftpappandroid.databinding.ActivityEditorBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.*
 import java.net.SocketException
 import java.io.IOException
@@ -38,7 +35,7 @@ class Editor : AppCompatActivity() {
         setContentView(view)
 
 
-        conexion= getIntent().getSerializableExtra("CONECTADO") as Conexion_ftp
+        conexion= intent.getSerializableExtra("CONECTADO") as Conexion_ftp
 
         try{
             lifecycleScope.launch {
@@ -89,6 +86,36 @@ class Editor : AppCompatActivity() {
             }
         }
 
+        binding.btnDescargar.setOnClickListener {
+            binding.etPrincipal.setText("")
+            try{
+                lifecycleScope.launch {
+                    val bufer= withContext(Dispatchers.IO){
+                        conexion.conexionFtp()
+                        conexion.crearCarpeta()
+                        conexion.leerArchivo(conexion.descargaArchivo())
+                    }
+
+                    val linelist= mutableListOf<String>()
+                    bufer.useLines {
+                            lines-> lines.forEach {
+                        linelist.add(it+"\n")
+                    }
+                    }
+                    linelist.forEach {
+                        binding.etPrincipal.append(it)
+                    }
+                    bufer.close()
+                }
+
+                Toast.makeText(this,"Datos obtenidos correctamente", Toast.LENGTH_LONG).show()
+            }catch (e: Exception){
+                Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+            }catch (e: IOException){
+                Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
 
@@ -96,7 +123,9 @@ class Editor : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         if(conexion!=null){
-            conexion.close()
+            CoroutineScope(Dispatchers.IO).launch{
+                conexion.close()
+            }
         }
     }
 

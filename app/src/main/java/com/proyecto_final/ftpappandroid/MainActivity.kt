@@ -3,6 +3,7 @@ package com.proyecto_final.ftpappandroid
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -14,15 +15,12 @@ import java.net.SocketException
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
     private lateinit var conexion:Conexion_ftp
-    private var espera=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         var view = binding.root
         setContentView(view)
-
-
 
         binding.btnConectar.setOnClickListener {
             if(binding.tilIp.text.isNullOrBlank() || binding.tilPort.text.isNullOrBlank())
@@ -36,35 +34,29 @@ class MainActivity : AppCompatActivity() {
                 conexion.user=binding.tilUser.text.toString()
                 conexion.password=binding.tilPass.text.toString()
 
+                Toast.makeText(this,"Conectando....",Toast.LENGTH_SHORT).show()
+                btnDisable(binding.btnConectar)
 
-                try{
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val conectado=conexion.conexionFtp()
-                        binding.btnConectar.isClickable.not()
-                        if(conectado){
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        conexion.conexionFtp()
+                    }catch (e:SocketException){
+                        Log.d("ERROR CONEXION",e.toString())
+                    }catch (e:IOException){
+                        Log.d("ERROR CONEXION",e.toString())
+                    }finally {
+                        if (conexion.isConectado) {
                             runOnUiThread {
-                                Toast.makeText(applicationContext,"Conectado correctamente al decodidicador",Toast.LENGTH_SHORT).show()
+                                cargaNuevaActivity()
                             }
-                            val intent = Intent(this@MainActivity, Editor::class.java)
-                            intent.putExtra("CONECTADO", conexion)
-                            startActivity(intent)
-                            conexion.close()
-                            finish()
-
-                        }else{
+                        } else {
                             runOnUiThread {
-                                Toast.makeText(applicationContext,"No ha sido posible realizar la conexión",Toast.LENGTH_SHORT).show()
+                                muestraError("No se ha podido conectar")
+                                btnEnable(binding.btnConectar)
                             }
-
                         }
                     }
-
-                }catch (e:SocketException){
-                    Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
-                }catch (e:IOException){
-                    Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
                 }
-
             }
 
         }
@@ -72,10 +64,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btnDisable(btn:Button){
-        btn.isClickable==false
-        btn.setBackgroundColor(getColor(R.color.error))
+        btn.isEnabled = false
+        btn.isClickable = false
+        btn.setText("CONECTANDO")
         btn.setTextColor(getColor(R.color.error))
     }
+
+    private fun btnEnable(btn:Button){
+        btn.isEnabled = true
+        btn.isClickable = true
+        btn.setText("CONECTAR")
+        btn.setTextColor(getColor(R.color.color_primary))
+    }
+
+    private fun muestraError(error:String){
+        Toast.makeText(this,error,Toast.LENGTH_SHORT).show()
+    }
+
+    private fun cargaNuevaActivity(){
+        Toast.makeText(this,"Conectado correctamente al decodidicador",Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, Editor::class.java)
+        intent.putExtra("CONECTADO", conexion)
+        startActivity(intent)
+        finish()
+    }
+
+
 
 
 }

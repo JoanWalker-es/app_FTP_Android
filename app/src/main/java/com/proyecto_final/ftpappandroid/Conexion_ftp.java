@@ -8,7 +8,6 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,10 +22,10 @@ public class Conexion_ftp implements Serializable {
     private int port = 21;
     private String user = "";
     private String password = "";
-    private FTPClient ftp;
-    private String directorioLocal = "";
-    private final String ficheroCCcam = "CCcam.cfg";
-    private boolean conectado = false;
+    private transient FTPClient ftp;
+    private transient String directorioLocal = "";
+    private transient final String ficheroCCcam = "CCcam.cfg";
+    private transient boolean conectado = false;
 
     public String getDirectorioLocal() {
         return directorioLocal;
@@ -76,7 +75,7 @@ public class Conexion_ftp implements Serializable {
      * @throws IOException
      */
 
-    public boolean conexionFtp() throws SocketException, IOException {
+    public void conexionFtp() throws SocketException, IOException {
 
         ftp = new FTPClient();
         ftp.connect(server, port);
@@ -95,7 +94,6 @@ public class Conexion_ftp implements Serializable {
         }
         ftp.setControlEncoding("UTF-8");
 
-        return conectado;
     }
 
     /**

@@ -48,8 +48,7 @@
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/ip"
-                android:text="192.168.3.15"/>
+                android:hint="@string/ip"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,8 +70,7 @@
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/puerto"
-                android:text="21"/>
+                android:hint="@string/puerto"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -94,8 +92,7 @@
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/usuario"
-                android:text="root"/>
+                android:hint="@string/usuario"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -117,8 +114,7 @@
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:text="wazap55"/>
+                android:hint="@string/password"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
