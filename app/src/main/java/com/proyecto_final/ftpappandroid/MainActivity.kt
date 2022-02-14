@@ -24,9 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnConectar.setOnClickListener {
             if(binding.tilIp.text.isNullOrBlank() || binding.tilPort.text.isNullOrBlank())
-                Toast.makeText(this,"Introduce los datos de la conexión",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,this.getString(R.string.input_data),Toast.LENGTH_SHORT).show()
             else if (binding.tilUser.text.isNullOrBlank() || binding.tilPass.text.isNullOrBlank()){
-                Toast.makeText(this,"Introduce los datos de login",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,this.getString(R.string.input_login),Toast.LENGTH_SHORT).show()
             }else{
                 conexion=Conexion_ftp()
                 conexion.server= binding.tilIp.text.toString()
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 conexion.user=binding.tilUser.text.toString()
                 conexion.password=binding.tilPass.text.toString()
 
-                Toast.makeText(this,"Conectando....",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,this.getString(R.string.connecting),Toast.LENGTH_SHORT).show()
                 btnDisable(binding.btnConectar)
 
                 CoroutineScope(Dispatchers.IO).launch {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             runOnUiThread {
-                                muestraError("No se ha podido conectar")
+                                muestraError(getString(R.string.error))
                                 btnEnable(binding.btnConectar)
                             }
                         }
@@ -66,14 +66,14 @@ class MainActivity : AppCompatActivity() {
     private fun btnDisable(btn:Button){
         btn.isEnabled = false
         btn.isClickable = false
-        btn.setText("CONECTANDO")
+        btn.setText(getString(R.string.conectando))
         btn.setTextColor(getColor(R.color.error))
     }
 
     private fun btnEnable(btn:Button){
         btn.isEnabled = true
         btn.isClickable = true
-        btn.setText("CONECTAR")
+        btn.setText(getString(R.string.conectar))
         btn.setTextColor(getColor(R.color.color_primary))
     }
 
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun cargaNuevaActivity(){
-        Toast.makeText(this,"Conectado correctamente al decodidicador",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,this.getString(R.string.connection_success),Toast.LENGTH_SHORT).show()
         val intent = Intent(this, Editor::class.java)
         intent.putExtra("CONECTADO", conexion)
         startActivity(intent)

@@ -57,7 +57,7 @@ class Editor : AppCompatActivity() {
                 bufer.close()
             }
 
-            Toast.makeText(this,"Datos obtenidos correctamente", Toast.LENGTH_LONG).show()
+            Toast.makeText(this,this.getString(R.string.data_success), Toast.LENGTH_LONG).show()
         }catch (e: Exception){
             Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
         }catch (e: IOException){
@@ -66,7 +66,7 @@ class Editor : AppCompatActivity() {
 
         binding.btnCargar.setOnClickListener {
             if(conexion==null){
-                Toast.makeText(this,"NO HAY CONEXION CON EL DECODIFICADOR",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,this.getString(R.string.no_connection),Toast.LENGTH_SHORT).show()
             }else{
                 lifecycleScope.launch {
                     withContext(Dispatchers.IO){
@@ -82,7 +82,7 @@ class Editor : AppCompatActivity() {
                     }
 
                 }
-                Toast.makeText(this,"Fichero subido correctamente al decodificador",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,this.getString(R.string.file_upload),Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -108,7 +108,7 @@ class Editor : AppCompatActivity() {
                     bufer.close()
                 }
 
-                Toast.makeText(this,"Datos obtenidos correctamente", Toast.LENGTH_LONG).show()
+                Toast.makeText(this,this.getString(R.string.data_success), Toast.LENGTH_LONG).show()
             }catch (e: Exception){
                 Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
             }catch (e: IOException){
