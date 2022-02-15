@@ -39,29 +39,40 @@ class Editor : AppCompatActivity() {
 
         try{
             lifecycleScope.launch {
-                val bufer= withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO){
                     conexion.conexionFtp()
                     conexion.crearCarpeta()
-                    conexion.leerArchivo(conexion.descargaArchivo())
+                    if(conexion.existeFichero()){
+                        val bufer=conexion.leerArchivo(conexion.descargaArchivo())
+                        runOnUiThread {
+                            val linelist= mutableListOf<String>()
+                            bufer.useLines {
+                                    lines-> lines.forEach {
+                                linelist.add(it+"\n")
+                            }
+                            }
+                            linelist.forEach {
+                                binding.etPrincipal.append(it)
+                            }
+                            bufer.close()
+                            muestraMensaje(getString(R.string.data_success))
+                        }
+
+                    }else{
+                        runOnUiThread {
+                            muestraMensaje(getString(R.string.existe))
+                        }
+                    }
                 }
 
-                val linelist= mutableListOf<String>()
-                bufer.useLines {
-                        lines-> lines.forEach {
-                            linelist.add(it+"\n")
-                        }
-                }
-                linelist.forEach {
-                    binding.etPrincipal.append(it)
-                }
-                bufer.close()
             }
 
-            Toast.makeText(this,this.getString(R.string.data_success), Toast.LENGTH_LONG).show()
         }catch (e: Exception){
-            Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+            muestraMensaje(e.message.toString())
+            //Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
         }catch (e: IOException){
-            Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+            muestraMensaje(e.message.toString())
+            //Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
         }
 
         binding.btnCargar.setOnClickListener {
@@ -82,7 +93,8 @@ class Editor : AppCompatActivity() {
                     }
 
                 }
-                Toast.makeText(this,this.getString(R.string.file_upload),Toast.LENGTH_SHORT).show()
+                muestraMensaje(getString(R.string.file_upload))
+                //Toast.makeText(this,this.getString(R.string.file_upload),Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -90,35 +102,48 @@ class Editor : AppCompatActivity() {
             binding.etPrincipal.setText("")
             try{
                 lifecycleScope.launch {
-                    val bufer= withContext(Dispatchers.IO){
+                    withContext(Dispatchers.IO){
                         conexion.conexionFtp()
                         conexion.crearCarpeta()
-                        conexion.leerArchivo(conexion.descargaArchivo())
+                        if(conexion.existeFichero()){
+                            val bufer=conexion.leerArchivo(conexion.descargaArchivo())
+                            runOnUiThread {
+                                val linelist= mutableListOf<String>()
+                                bufer.useLines {
+                                        lines-> lines.forEach {
+                                    linelist.add(it+"\n")
+                                }
+                                }
+                                linelist.forEach {
+                                    binding.etPrincipal.append(it)
+                                }
+                                bufer.close()
+                                muestraMensaje(getString(R.string.data_success))
+                            }
+
+                        }else{
+                            runOnUiThread {
+                                muestraMensaje(getString(R.string.existe))
+                            }
+                        }
                     }
 
-                    val linelist= mutableListOf<String>()
-                    bufer.useLines {
-                            lines-> lines.forEach {
-                        linelist.add(it+"\n")
-                    }
-                    }
-                    linelist.forEach {
-                        binding.etPrincipal.append(it)
-                    }
-                    bufer.close()
                 }
 
-                Toast.makeText(this,this.getString(R.string.data_success), Toast.LENGTH_LONG).show()
             }catch (e: Exception){
-                Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+                muestraMensaje(e.message.toString())
+                //Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
             }catch (e: IOException){
-                Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
+                muestraMensaje(e.message.toString())
+                //Toast.makeText(this,e.message, Toast.LENGTH_SHORT).show()
             }
         }
 
     }
 
-
+    private fun muestraMensaje(error:String){
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

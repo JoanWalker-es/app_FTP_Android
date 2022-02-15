@@ -9,12 +9,13 @@
     <string name="cargar">CARGAR</string>
     <string name="descargar">DESCARGAR</string>
     <string name="conectando">CONECTANDO</string>
+    <string name="existe">No existe el archivo CCcam.cfg. Introduzca los datos y pulse cargar para crearlo</string>
     
     <!--Textos-->
     <string name="input_data">Introduce los datos de la conexión</string>
     <string name="input_login">Introduce el login</string>
     <string name="connecting">Conectando…</string>
-    <string name="error">No se ha podido conectar</string>
+    <string name="error">No se ha podido conectar. Compruebe los datos de conexión</string>
     <string name="connection_success">Conectado al decodificador</string>
     <string name="data_success">Datos obtenidos correctamente</string>
     <string name="no_connection">No hay conexión con el decodificador</string>

@@ -1,0 +1,24 @@
+<resources>
+    <!-- Etiquetas-->
+    <string name="app_name">CCcam Enigma2</string>
+    <string name="ip">IP</string>
+    <string name="puerto">PORT</string>
+    <string name="usuario">USER</string>
+    <string name="password">PASSWORD</string>
+    <string name="conectar">CONNECT</string>
+    <string name="cargar">UPLOAD</string>
+    <string name="descargar">DOWNLOAD</string>
+    <string name="conectando">CONNECTING</string>
+    <string name="existe">The CCcam.cfg file does not exist. Enter the data and press upload to create it</string>
+    
+    <!--Textos-->
+    <string name="input_data">Type the connection data</string>
+    <string name="input_login">Type login</string>
+    <string name="connecting">Connecting…</string>
+    <string name="error">Can not connect. Check the connection data.</string>
+    <string name="connection_success">Connection success</string>
+    <string name="data_success">Data success</string>
+    <string name="no_connection">No connection available</string>
+    <string name="file_upload">File upload success</string>
+
+</resources>
