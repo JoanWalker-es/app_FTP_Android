@@ -5,6 +5,6 @@ App to upload CCcam lines to an enigma2 decoder from an Android device.
 
 ![Ventana principal](https://github.com/JoanWalker-es/app_FTP_Android/blob/master/raw/pantalla_inicio.png)
 
-![Ventana datos(https://github.com/JoanWalker-es/app_FTP_Android/blob/master/raw/muestra_cccam.png)
+![Ventana datos](https://github.com/JoanWalker-es/app_FTP_Android/blob/master/raw/muestra_cccam.png)
 
 
